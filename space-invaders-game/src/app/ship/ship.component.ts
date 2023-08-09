@@ -6,15 +6,20 @@ import { Component, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./ship.component.css']
 })
 export class ShipComponent implements OnInit {
-  shipImageUrl = './assets/ship.png'; // Replace with your ship image path
-  backgroundImageUrl = './assets/background.jpg'; // Replace with your background image path
+  shipImageUrl = './assets/ship.png'; 
+  backgroundImageUrl = './assets/background.jpg';
   shipPositionX = 0;
+  obstacleImageUrl = './assets/obstacle.jpg';
+  obstacles: { x: number, y: number }[] = [];
+
   generateBackgroundStyle(): string {
     return 'url(' + this.backgroundImageUrl + ')';
   }
 
+  
   ngOnInit() {
     this.startBackgroundAnimation();
+    this.startObstacles();
   }
 
   startBackgroundAnimation() {
@@ -22,9 +27,31 @@ export class ShipComponent implements OnInit {
     let posY = 0;
 
     setInterval(() => {
-      posY += 1.5; // Adjust the speed of background movement
+      posY += 1.5;
       background.style.backgroundPosition = `0px ${posY}px`;
-    }, 20); // Adjust the interval to control the animation smoothness
+    }, 20);
+  }
+
+  startObstacles() {
+    setInterval(() => {
+      this.generateObstacle();
+    }, 2000); // Create a new obstacle every 2 seconds
+  }
+  
+  generateObstacle() {
+    const maxX = window.innerWidth;
+    for (let x = 0; x < maxX; x += 100) {
+      this.obstacles.push({ x, y: 0 });
+    }
+  }
+
+  moveObstacles() {
+    const obstacleSpeed = 20; // Adjust the obstacle speed
+    this.obstacles.forEach(obstacle => {
+      obstacle.y += obstacleSpeed;
+    });
+    // Remove off-screen obstacles
+    this.obstacles = this.obstacles.filter(obstacle => obstacle.y < window.innerHeight);
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -39,15 +66,14 @@ export class ShipComponent implements OnInit {
   moveShipLeft() {
     const maxLeftPosition = 30;
     if (this.shipPositionX > maxLeftPosition) {
-      this.shipPositionX -= 20; // Adjust the movement step
+      this.shipPositionX -= 20;
     }
   }
   
   moveShipRight() {
-    // Calculate the maximum right position for the ship
-    const maxRightPosition = window.innerWidth  - 270;
+    const maxRightPosition = window.innerWidth - 270;
     if (this.shipPositionX < maxRightPosition) {
-      this.shipPositionX += 20; // Adjust the movement step
+      this.shipPositionX += 20;
     }
   }
 }

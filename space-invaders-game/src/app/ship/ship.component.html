@@ -1,4 +1,7 @@
 <div id="game-container">
   <div id="game-background" [ngStyle]="{ 'background-image': generateBackgroundStyle() }"></div>
   <img id="player-ship" [src]="shipImageUrl" [style.left.px]="shipPositionX">
+  <div *ngFor="let obstacle of obstacles">
+    <img id="obstacle" [src]="obstacleImageUrl" [style.left.px]="obstacle.x">
+  </div>
 </div>
