@@ -9,6 +9,9 @@ export class ShipComponent implements OnInit {
   shipImageUrl = './assets/ship.png'; // Replace with your ship image path
   backgroundImageUrl = './assets/background.jpg'; // Replace with your background image path
   shipPositionX = 0;
+  generateBackgroundStyle(): string {
+    return 'url(' + this.backgroundImageUrl + ')';
+  }
 
   ngOnInit() {
     this.startBackgroundAnimation();
@@ -19,7 +22,7 @@ export class ShipComponent implements OnInit {
     let posY = 0;
 
     setInterval(() => {
-      posY += 1; // Adjust the speed of background movement
+      posY += 1.5; // Adjust the speed of background movement
       background.style.backgroundPosition = `0px ${posY}px`;
     }, 20); // Adjust the interval to control the animation smoothness
   }
@@ -34,10 +37,17 @@ export class ShipComponent implements OnInit {
   }
 
   moveShipLeft() {
-    this.shipPositionX -= 10; // Adjust the movement step
+    const maxLeftPosition = 30;
+    if (this.shipPositionX > maxLeftPosition) {
+      this.shipPositionX -= 20; // Adjust the movement step
+    }
   }
-
+  
   moveShipRight() {
-    this.shipPositionX += 10; // Adjust the movement step
+    // Calculate the maximum right position for the ship
+    const maxRightPosition = window.innerWidth  - 270;
+    if (this.shipPositionX < maxRightPosition) {
+      this.shipPositionX += 20; // Adjust the movement step
+    }
   }
 }

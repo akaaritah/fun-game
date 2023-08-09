@@ -12,7 +12,4 @@ export class MenuComponent {
   startGame(): void {
     this.router.navigate(['/game']);
   }
-  navigateToGame(): void {
-    this.router.navigate(['/game']);
-  }
 }

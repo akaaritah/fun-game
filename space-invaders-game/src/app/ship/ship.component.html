@@ -1,4 +1,4 @@
 <div id="game-container">
-    <div id="game-background" [style.backgroundImage]="'url(' + backgroundImageUrl + ')'"></div>
-    <img id="player-ship" [src]="shipImageUrl" [style.left.px]="shipPositionX">
-  </div>
+  <div id="game-background" [ngStyle]="{ 'background-image': generateBackgroundStyle() }"></div>
+  <img id="player-ship" [src]="shipImageUrl" [style.left.px]="shipPositionX">
+</div>
