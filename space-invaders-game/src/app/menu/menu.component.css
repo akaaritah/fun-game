@@ -9,13 +9,13 @@
   justify-content: center;
   align-items: center;
   scroll-behavior: smooth;
-  background: #131313;
+  background: #1d0d30;
   font-family:'Helvetica Neue', sans-serif;
 }
 
 h1 a {
 font-size: 80px;
-color: #BF2E97;
+color: #c97719;
 text-decoration: none;
 text-transform: uppercase;
 }
@@ -44,7 +44,7 @@ position: relative;
 width: 0;
 height: 0;
 color: #fff;
-background-color: #191919;
+background-color: #2a1444;
 animation: 1s grow ease forwards;
 text-align: center;
 }
@@ -80,7 +80,7 @@ height: 2px;
 width: 0px;
 left: 0;
 bottom: 10px;
-background: #BF2E97; 
+background: #2a1444; 
 transition: all .5s ease;
 }
 
@@ -105,7 +105,7 @@ z-index: 1;
 font-size: 30px;
 align-items: center;
 justify-content: center;
-background-color: #BF2E97;
+background-color: #c97719;
 color: #fff;
 content: "×";
 cursor: pointer;

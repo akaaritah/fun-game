@@ -1,7 +1,19 @@
 <div id="game-container">
   <div id="game-background" [ngStyle]="{ 'background-image': generateBackgroundStyle() }"></div>
-  <img id="player-ship" [src]="shipImageUrl" [style.left.px]="shipPositionX">
+  <img id="player-ship" [src]="shipImageUrl" [style.left.px]="shipPositionX" [style.width.px]="shipWidth" [style.height.px]="shipHeight">
   <div *ngFor="let obstacle of obstacles">
-    <img id="obstacle" [src]="obstacleImageUrl" [style.left.px]="obstacle.x">
+    <img class="obstacle" [src]="obstacleImageUrl" [style.left.px]="obstacle.x" [style.top.px]="obstacle.y" [style.width.px]="obstacleWidth" [style.height.px]="obstacleHeight">
+  </div>
+  <div id="score">
+    Score: {{ score }}
+  </div>
+  <div id="game-container">
+    <div *ngIf="!gameOver">
+    </div>
+    <div *ngIf="gameOver" class="game-over-container">
+      <h2>Game Over</h2>
+      <p>Your score: {{ score }}</p>
+      <button (click)="returnToMenu()">Return to Menu</button>
+    </div>
   </div>
 </div>
