@@ -60,8 +60,9 @@
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 24px;
+  font-size: 36px;
   color: orange;
+  font-family:'Helvetica Neue', sans-serif;
 }
 
 .game-message {

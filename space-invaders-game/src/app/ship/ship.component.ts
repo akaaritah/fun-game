@@ -35,8 +35,9 @@ export class ShipComponent implements OnInit {
     this.backgroundMusic = document.getElementById('background-music') as HTMLAudioElement;
     this.scoreSound = document.getElementById('score-sound') as HTMLAudioElement;
     this.backgroundMusic.play();
+    this.backgroundMusic.volume = 0.5;
     if (this.scoreSound) {
-      this.scoreSound.volume = 0.25;
+      this.scoreSound.volume = 0.1;
     }
   }
 
