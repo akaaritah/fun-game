@@ -12,13 +12,21 @@ export class ShipComponent implements OnInit {
   shipPositionX = 800;
   obstacleImageUrl = './assets/obstacle.jpg';
   obstacles: { x: number, y: number }[] = [];
-  obstacleWidth = 120; // Adjust the obstacle width
+  obstacleWidth = 120;
   score= 0;
   shipWidth= 160;
   shipHeight=160;
   obstacleHeight= 120;
-  gameOver: boolean = false;
+  gameMessage: string = ''; 
+  isGameOver: boolean = false;
   constructor(private router: Router) {}
+  isGameRunning: boolean = true;
+  obstacleSpeed = 5;
+  playerSpeed = 20;
+  backgroundMusic: HTMLAudioElement | null = null;
+  scoreSound: HTMLAudioElement | null = null;
+
+  
 
   generateBackgroundStyle(): string {
     return 'url(' + this.backgroundImageUrl + ')';
@@ -28,6 +36,20 @@ export class ShipComponent implements OnInit {
   ngOnInit() {
     this.startBackgroundAnimation();
     this.startObstacles();
+    this.startSpeedIncrementTimer();
+    this.backgroundMusic = document.getElementById('background-music') as HTMLAudioElement;
+    this.scoreSound = document.getElementById('score-sound') as HTMLAudioElement;
+    this.backgroundMusic.play();
+    if (this.scoreSound) {
+      this.scoreSound.volume = 0.25;
+    }
+  }
+
+  startSpeedIncrementTimer() {
+    setInterval(() => {
+      this.obstacleSpeed += 1;
+      this.playerSpeed += 0.75;
+    }, 10000);
   }
 
   startBackgroundAnimation() {
@@ -37,49 +59,59 @@ export class ShipComponent implements OnInit {
     setInterval(() => {
       posY += 1.5;
       background.style.backgroundPosition = `0px ${posY}px`;
-      this.moveObstacles(); // Call moveObstacles to update obstacle positions
+      this.moveObstacles();
     }, 20);
   }
 
   startObstacles() {
     setInterval(() => {
-      this.generateObstacles();
-    }, 2000); // Create a new obstacle every 2 seconds
+      if (this.isGameRunning) {
+        this.generateObstacles();
+      }
+    }, 2000);
   }
-  
+
+
   generateObstacles() {
     const maxX = window.innerWidth;
     
     const randomX = Math.floor(Math.random() * (maxX - this.obstacleWidth));
-    this.obstacles.push({ x: randomX, y: 0 }); // Initialize obstacle at the top
+    this.obstacles.push({ x: randomX, y: 0 });
   }
+
 
   moveObstacles() {
     if (this.score <= -10) {
-      this.gameOver = true;
+      this.isGameOver = true;
+      this.gameMessage= 'You lose! You can try again...'
+      this.isGameRunning = false;
       return;
     }
-    const obstacleSpeed = 5; // Adjust the obstacle speed
+  
+    if (this.score >= 60) {
+      this.isGameOver = true;
+      this.gameMessage= 'You win! Very nice.'
+      this.isGameRunning = false;
+      return;
+    }
   
     this.obstacles.forEach((obstacle, index) => {
-      obstacle.y += obstacleSpeed;
+      obstacle.y += this.obstacleSpeed;
   
-      // Calculate obstacle and ship middle positions
       const obstacleMiddleX = obstacle.x + this.obstacleWidth / 2;
       const shipMiddleX = this.shipPositionX + this.shipWidth / 2;
       const shipBottomY = window.innerHeight - this.shipHeight;
   
-      // Check for collision only when the ship is on the same Y level as the obstacle
       if (
-        obstacle.y > shipBottomY - this.obstacleHeight && // Ship and obstacle are on the same Y level
-        Math.abs(obstacleMiddleX - shipMiddleX) < this.shipWidth / 2 // Ship middle touches obstacle middle
+        obstacle.y > shipBottomY - this.obstacleHeight &&
+        Math.abs(obstacleMiddleX - shipMiddleX) < this.shipWidth / 2
       ) {
         this.score += 1;
-        this.obstacles.splice(index, 1); // Remove the collided obstacle
+        this.playScoreSound();
+        this.obstacles.splice(index, 1);
       }
     });
   
-    // Remove off-screen obstacles and subtract a point
     this.obstacles = this.obstacles.filter(obstacle => {
       if (obstacle.y >= window.innerHeight) {
         this.score -= 1;
@@ -87,6 +119,13 @@ export class ShipComponent implements OnInit {
       }
       return true;
     });
+  }
+
+  playScoreSound() {
+    if (this.scoreSound) {
+      this.scoreSound.currentTime = 0;
+      this.scoreSound.play();
+    }
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -101,21 +140,21 @@ export class ShipComponent implements OnInit {
   moveShipLeft() {
     const maxLeftPosition = 0;
     if (this.shipPositionX > maxLeftPosition) {
-      this.shipPositionX -= 20;
+      this.shipPositionX -= this.playerSpeed;
     }
   }
   
   moveShipRight() {
     const maxRightPosition = window.innerWidth - 180;
     if (this.shipPositionX < maxRightPosition) {
-      this.shipPositionX += 20;
+      this.shipPositionX += this.playerSpeed;
     }
   }
 
-  returnToMenu() {
-    this.gameOver = false;
-    this.score = 0;
-    this.obstacles = [];
-    this.router.navigate(['/']);
-  }
+returnToMenu() {
+  this.isGameOver = false;
+  this.score = 0;
+  this.obstacles = [];
+  this.router.navigate(['/']);
+}
 }
