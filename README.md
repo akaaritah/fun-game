@@ -21,6 +21,7 @@ When they reach 50 points, the game ends with a win. Additionally, when the play
 * I want to track my score - whenever I collect a pumpkin or lose one...
 * I want to be able to return to menu, if I lose or win.
 * I want to be able to hear background music.
+* I want that when time passes, speed of falling pumpkins and the cat increases (more difficult and quicker gameplay with time).
 ~~~
 
 
