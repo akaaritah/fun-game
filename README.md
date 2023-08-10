@@ -39,7 +39,7 @@ Ideas for future:
 
 
 *All graphics (background, cat and pumpkins) are made by me.*
-
+*project is called space-invaders, because it was the innitial idea for it.*
 
 
  
