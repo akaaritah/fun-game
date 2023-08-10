@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,6 +25,8 @@ export class ShipComponent implements OnInit {
   playerSpeed = 20;
   backgroundMusic: HTMLAudioElement | null = null;
   scoreSound: HTMLAudioElement | null = null;
+
+  // @ViewChild('obstacleComponent') obstacleComponent: ElementRef | undefined;
 
   ngOnInit() {
     this.startBackgroundAnimation();
@@ -81,6 +83,7 @@ export class ShipComponent implements OnInit {
 
     const randomX = Math.floor(Math.random() * (maxX - this.obstacleWidth));
     this.obstacles.push({ x: randomX, y: 0 });
+
   }
 
   moveObstacles() {
