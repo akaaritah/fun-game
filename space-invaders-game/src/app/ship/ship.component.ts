@@ -60,6 +60,14 @@ export class ShipComponent implements OnInit {
     }, 20);
   }
 
+  startObstacleAnimation() {
+    let posY = 0;
+    setInterval(() => {
+      posY += 1.5;
+      this.moveObstacles();
+    }, 20);
+  }
+
   startObstacles() {
     setInterval(() => {
       if (this.isGameRunning) {

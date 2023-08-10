@@ -17,7 +17,6 @@
 h1 a {
 font-size: 80px;
 color: #c97719;
-text-decoration: none;
 text-transform: uppercase;
 }
 
@@ -32,23 +31,23 @@ right: 0;
 top: 0;
 width: 100%;
 height: 100%;
+justify-content: center;
 display: flex;
 align-items: center;
-justify-content: center;
 }
 
 .popover .content {
 display: flex;
 align-items: center;
 justify-content: center;
+text-align: center;
 position: relative;
 width: 0;
 height: 0;
-color: #fff;
 background-color: #2a1444;
 background: url('../../assets/menu-2.jpg') center/cover no-repeat;
 animation: 1s grow ease forwards;
-text-align: center;
+color: #fff;
 }
 
 .nav_list  {
@@ -70,20 +69,20 @@ overflow: hidden;
 padding: 15px 0;
 text-transform: uppercase;
 transform: translateY(200px);
-opacity: 0;
 animation: 2s slideUp ease forwards .5s;
 position: relative;
+opacity: 0;
 }
 
 .nav_list li::before {
 content: '';
 position: absolute;
-height: 2px;
-width: 0px;
-left: 0;
 bottom: 10px;
 background: #2a1444; 
 transition: all .5s ease;
+height: 2px;
+width: 0px;
+left: 0;
 }
 
 .nav_list li:hover:before {
@@ -102,9 +101,6 @@ top: 0;
 width: 50px;
 height: 50px;
 position: absolute;
-display: flex;
-z-index: 1;
-font-size: 30px;
 align-items: center;
 justify-content: center;
 background-color: #c97719;
@@ -113,6 +109,9 @@ content: "×";
 cursor: pointer;
 opacity: 0; 
 animation: 1s fadeIn ease forwards .5s;
+display: flex;
+z-index: 1;
+font-size: 30px;
 }
 
 @keyframes grow {
