@@ -40,51 +40,6 @@ Ideas for future:
 
 *All graphics (background, cat and pumpkins) are made by me.*
 
-## Domain models:
-
-
-1. Ship:
-
-Attributes:
-
-positionX;
-width;
-height;
-imageUrl;
-
-Methods:
-
-moveLeft();
-moveRight();
-
-
-2. Obstacle:
-
-Attributes:
-
-positionX;
-positionY;
-width;
-height;
-imageUrl;
-
-3. Game:
-
-Attributes:
-score;
-isGameOver;
-gameMessage;
-obstacleSpeed;
-playerSpeed;
-
-Methods:
-
-start();
-generateObstacle();
-moveObstacles();
-checkCollision(ship: Ship, obstacle: Obstacle);
-updateScore(increment: number);
-playScoreSound();
 
 
  
