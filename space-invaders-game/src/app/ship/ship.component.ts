@@ -7,32 +7,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./ship.component.css']
 })
 export class ShipComponent implements OnInit {
-  shipImageUrl = './assets/ship.png'; 
-  backgroundImageUrl = './assets/background.jpg';
+  shipImageUrl = './assets/ship.PNG';
+  backgroundImageUrl = './assets/background.PNG';
   shipPositionX = 800;
-  obstacleImageUrl = './assets/obstacle.jpg';
+  obstacleImageUrl = './assets/obstacle.PNG';
   obstacles: { x: number, y: number }[] = [];
   obstacleWidth = 120;
-  score= 0;
-  shipWidth= 160;
-  shipHeight=160;
-  obstacleHeight= 120;
-  gameMessage: string = ''; 
+  score = 0;
+  shipWidth = 200;
+  shipHeight = 200;
+  obstacleHeight = 120;
+  gameMessage: string = '';
   isGameOver: boolean = false;
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
   isGameRunning: boolean = true;
   obstacleSpeed = 5;
   playerSpeed = 20;
   backgroundMusic: HTMLAudioElement | null = null;
   scoreSound: HTMLAudioElement | null = null;
 
-  
-
-  generateBackgroundStyle(): string {
-    return 'url(' + this.backgroundImageUrl + ')';
-  }
-
-  
   ngOnInit() {
     this.startBackgroundAnimation();
     this.startObstacles();
@@ -45,6 +38,10 @@ export class ShipComponent implements OnInit {
     }
   }
 
+  generateBackgroundStyle(): string {
+    return 'url(' + this.backgroundImageUrl + ')';
+  }
+
   startSpeedIncrementTimer() {
     setInterval(() => {
       this.obstacleSpeed += 1;
@@ -55,7 +52,7 @@ export class ShipComponent implements OnInit {
   startBackgroundAnimation() {
     const background = document.getElementById('game-background') as HTMLElement;
     let posY = 0;
-  
+
     setInterval(() => {
       posY += 1.5;
       background.style.backgroundPosition = `0px ${posY}px`;
@@ -68,40 +65,38 @@ export class ShipComponent implements OnInit {
       if (this.isGameRunning) {
         this.generateObstacles();
       }
-    }, 2000);
+    }, 1500);
   }
-
 
   generateObstacles() {
     const maxX = window.innerWidth;
-    
+
     const randomX = Math.floor(Math.random() * (maxX - this.obstacleWidth));
     this.obstacles.push({ x: randomX, y: 0 });
   }
 
-
   moveObstacles() {
     if (this.score <= -10) {
       this.isGameOver = true;
-      this.gameMessage= 'You lose! You can try again...'
+      this.gameMessage = 'You lose! You can try again...'
       this.isGameRunning = false;
       return;
     }
-  
+
     if (this.score >= 60) {
       this.isGameOver = true;
-      this.gameMessage= 'You win! Very nice.'
+      this.gameMessage = 'You win! Very nice.'
       this.isGameRunning = false;
       return;
     }
-  
+
     this.obstacles.forEach((obstacle, index) => {
       obstacle.y += this.obstacleSpeed;
-  
+
       const obstacleMiddleX = obstacle.x + this.obstacleWidth / 2;
       const shipMiddleX = this.shipPositionX + this.shipWidth / 2;
       const shipBottomY = window.innerHeight - this.shipHeight;
-  
+
       if (
         obstacle.y > shipBottomY - this.obstacleHeight &&
         Math.abs(obstacleMiddleX - shipMiddleX) < this.shipWidth / 2
@@ -111,7 +106,7 @@ export class ShipComponent implements OnInit {
         this.obstacles.splice(index, 1);
       }
     });
-  
+
     this.obstacles = this.obstacles.filter(obstacle => {
       if (obstacle.y >= window.innerHeight) {
         this.score -= 1;
@@ -143,18 +138,18 @@ export class ShipComponent implements OnInit {
       this.shipPositionX -= this.playerSpeed;
     }
   }
-  
+
   moveShipRight() {
-    const maxRightPosition = window.innerWidth - 180;
+    const maxRightPosition = window.innerWidth - 220;
     if (this.shipPositionX < maxRightPosition) {
       this.shipPositionX += this.playerSpeed;
     }
   }
 
-returnToMenu() {
-  this.isGameOver = false;
-  this.score = 0;
-  this.obstacles = [];
-  this.router.navigate(['/']);
-}
+  returnToMenu() {
+    this.isGameOver = false;
+    this.score = 0;
+    this.obstacles = [];
+    this.router.navigate(['/']);
+  }
 }

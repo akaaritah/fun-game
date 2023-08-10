@@ -10,6 +10,7 @@
   align-items: center;
   scroll-behavior: smooth;
   background: #1d0d30;
+  
   font-family:'Helvetica Neue', sans-serif;
 }
 
@@ -45,6 +46,7 @@ width: 0;
 height: 0;
 color: #fff;
 background-color: #2a1444;
+background: url('../../assets/menu-2.jpg') center/cover no-repeat;
 animation: 1s grow ease forwards;
 text-align: center;
 }
